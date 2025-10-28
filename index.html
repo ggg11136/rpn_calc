@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <title>rpn_manual.nim</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>🐳</text></svg>">
+  <meta content="text/html; charset=utf-8" http-equiv="content-type">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="nimib 0.3.12" name="generator">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.min.css">
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/pietroppeter/nimib/assets/atom-one-light.css'>
+    <script src="https://cdn.jsdelivr.net/gh/pietroppeter/nimib@main/assets/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+
+  <style>
+.nb-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nb-small {
+  font-size: 0.8rem;
+}
+button.nb-small {
+  float: right;
+  padding: 2px;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+section#source {
+  display:none
+}
+pre > code {
+  font-size: 1.2em;
+}
+.nb-output {
+  line-height: 1.15;
+}
+figure {
+  margin: 2rem 0;
+}
+figcaption {
+  text-align: center;
+}
+  
+</style>
+  
+</head>
+<body>
+<header>
+<div class="nb-box">
+  <span><a href=".">🏡</a></span>
+  <span><code>rpn_manual.nim</code></span>
+  <span></span>
+</div>
+<hr>
+</header><main>
+<h1>RPN计算器使用手册</h1>
+<h2>作者:guojia</h2>
+<h2>日期:2025.10</h2>
+<h2>简介</h2>
+<p>逆波兰表示法（Reverse Polish Notation，RPN）是一种数学表达式表示法，其中操作符位于操作数之后。</p>
+<h2>安装和编译</h2>
+<h3>编译步骤</h3>
+<pre><code class="language-bash">g++ -std=c++11 -o rpn_calc rpn_calc.cpp
+运行程序
+bash
+./rpn_calc
+</code></pre>
+<h2>基本使用示例</h2>
+<pre><code class="nohighlight hljs nim"><span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;示例输入和输出：&quot;</span>
+<span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;输入: '5 5 +'&quot;</span>
+<span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;输出: 结果: 10&quot;</span>
+<span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;&quot;</span>
+<span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;输入: '1 2 + 3 + 7 7 * +'&quot;</span>
+<span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;输出: 结果: 55&quot;</span>
+<span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;输入:'-3 neg'&quot;</span>
+<span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;输出:结果:3&quot;</span>
+<span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;输入:'16 sqrt'&quot;</span>
+<span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;输出:结果:4&quot;</span></code></pre><pre class="nb-output">示例输入和输出：
+输入: '5 5 +'
+输出: 结果: 10
+
+输入: '1 2 + 3 + 7 7 * +'
+输出: 结果: 55
+输入:'-3 neg'
+输出:结果:3
+输入:'16 sqrt'
+输出:结果:4</pre>
+<h2>支持的操作符</h2>
+<h2>基础运算</h2>
+<p>＋ - 加法</p>
+<p>－ - 减法</p>
+<p>＊ - 乘法</p>
+<p>/ - 除法</p>
+<h2>高级运算</h2>
+<p>sqrt - 平方根</p>
+<p>^ - 幂运算</p>
+<p>fib - 斐波那契数</p>
+<p>栈操作
+clear - 清空栈</p>
+<p>show - 显示栈</p>
+<p>history - 显示历史</p>
+<p>help - 帮助信息</p>
+<h2>错误代码和异常说明</h2>
+<p>栈空         —— 操作数不足,</p>
+<p>除零错误     —— 0 作除数,</p>
+<p>负数开方     —— sqrt 参数 &lt; 0,</p>
+<p>数值溢出     —— 结果超出 double 范围,</p>
+<p>未知操作符   —— 未定义符号,</p>
+<p>表达式不完整 —— 栈未归一
+&quot;</p>
+</main>
+<footer>
+<div class="nb-box">
+  <span><span class="nb-small">made with <a href="https://pietroppeter.github.io/nimib/">nimib 🐳</a></span></span>
+  <span></span>
+  <span><button class="nb-small" id="show" onclick="toggleSourceDisplay()">Show Source</button></span>
+</div>
+</footer>
+<section id="source">
+<pre><code class="nohighlight nim hljs"><span class="hljs-keyword">import</span> nimib
+
+nbInit
+
+nbText: <span class="hljs-string">&quot;&quot;&quot;
+# RPN计算器使用手册
+## 作者:guojia
+
+## 日期:2025.10
+## 简介
+逆波兰表示法（Reverse Polish Notation，RPN）是一种数学表达式表示法，其中操作符位于操作数之后。
+
+## 安装和编译
+
+### 编译步骤
+```bash
+g++ -std=c++11 -o rpn_calc rpn_calc.cpp
+运行程序
+bash
+./rpn_calc
+&quot;&quot;&quot;</span>
+
+nbText: <span class="hljs-string">&quot;&quot;&quot;
+
+## 基本使用示例
+&quot;&quot;&quot;</span>
+
+nbCode:
+  <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;示例输入和输出：&quot;</span>
+  <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;输入: '5 5 +'&quot;</span>
+  <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;输出: 结果: 10&quot;</span>
+  <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;&quot;</span>
+  <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;输入: '1 2 + 3 + 7 7 * +'&quot;</span>
+  <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;输出: 结果: 55&quot;</span>
+  <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;输入:'-3 neg'&quot;</span>
+  <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;输出:结果:3&quot;</span>
+  <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;输入:'16 sqrt'&quot;</span>
+  <span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;输出:结果:4&quot;</span>
+
+nbText: <span class="hljs-string">&quot;&quot;&quot;
+
+## 支持的操作符
+## 基础运算
+＋ - 加法
+
+－ - 减法
+
+＊ - 乘法
+
+/ - 除法
+
+
+## 高级运算
+sqrt - 平方根
+
+^ - 幂运算
+
+fib - 斐波那契数
+
+栈操作
+clear - 清空栈
+
+show - 显示栈
+
+history - 显示历史
+
+help - 帮助信息
+&quot;&quot;&quot;</span>
+
+nbText: <span class="hljs-string">&quot;&quot;&quot;
+## 错误代码和异常说明
+栈空         —— 操作数不足,
+
+除零错误     —— 0 作除数,
+
+负数开方     —— sqrt 参数 &lt; 0,
+
+数值溢出     —— 结果超出 double 范围,
+
+未知操作符   —— 未定义符号,
+
+表达式不完整 —— 栈未归一
+&quot;&quot;&quot;&quot;</span>
+nbSave
+</code></pre>
+</section><script>
+function toggleSourceDisplay() {
+  var btn = document.getElementById("show")
+  var source = document.getElementById("source");
+  if (btn.innerHTML=="Show Source") {
+    btn.innerHTML = "Hide Source";
+    source.style.display = "block";
+  } else {
+    btn.innerHTML = "Show Source";
+    source.style.display = "none";
+  }
+}
+</script></body>
+</html>
